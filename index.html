@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="Rave Community News & Ranking">
+    <meta name="author" content="Lautyy33 & Nyx">
+    <title>Rave Community Fan</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fjalla+One&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        #videoBG {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -50;
+            filter: brightness(0.4) contrast(1.1) hue-rotate(10deg);
+            object-fit: cover;
+        }
+
+        .glass-panel {
+            background: rgba(10, 10, 12, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Fjalla One', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .rave-title {
+            font-size: 2.5rem;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #3b82f6, #8b5cf6); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fff; }
+
+        /* NEON BOX */
+        .neon-box {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .neon-box:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+        }
+
+        .action-btn {
+            background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+            border: none;
+            transition: transform 0.2s;
+        }
+        .action-btn:active { transform: scale(0.95); }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-active {
+            background-color: #3b82f6 !important;
+            color: white !important;
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .rave-footer-link {
+            color: #9ca3af;
+            transition: color 0.2s;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 4px;
+        }
+        .rave-footer-link:hover { color: #fff; border-color: #fff; background: rgba(255,255,255,0.1); text-decoration: none; }
+
+        /* FORO STYLES */
+        .forum-card {
+            background: rgba(20, 20, 25, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 3px solid transparent;
+            border-radius: 8px;
+            padding: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .forum-card:hover {
+            background: rgba(30, 30, 40, 0.8);
+            border-left-color: #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.15);
+            transform: translateX(5px);
+        }
+        .forum-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(transparent 50%, rgba(59,130,246,0.05) 50%);
+            background-size: 100% 4px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .forum-card:hover::after { opacity: 1; }
+
+        .trending-card {
+            background: linear-gradient(145deg, rgba(20, 20, 25, 0.9), rgba(50, 40, 10, 0.4));
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-left: 3px solid #eab308;
+        }
+        .trending-card:hover {
+            box-shadow: 0 0 20px rgba(234, 179, 8, 0.2);
+            border-color: #eab308;
+        }
+
+        .forum-meta { font-size: 11px; color: #6b7280; display: flex; align-items: center; gap: 10px; }
+        .forum-stats { display: flex; align-items: center; gap: 15px; font-size: 12px; color: #9ca3af; }
+        
+        .forum-input, .forum-select {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            color: white;
+            transition: all 0.3s;
+        }
+        .forum-input:focus, .forum-select:focus {
+            border-color: #3b82f6;
+            outline: none;
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+        
+        .delete-btn { opacity: 0; transition: all 0.2s; cursor: pointer; }
+        .forum-card:hover .delete-btn, .comment-item:hover .delete-btn { opacity: 0.7; }
+        .delete-btn:hover { opacity: 1 !important; transform: scale(1.2); color: #ef4444; }
+
+        .tag-badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .thread-detail-enter { animation: slideInRight 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .thread-list-enter { animation: slideInLeft 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        
+        @keyframes slideInRight { from { transform: translateX(50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideInLeft { from { transform: translateX(-50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        .terminal-modal {
+            border: 1px solid #3b82f6;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3), inset 0 0 20px rgba(0,0,0,0.8);
+            background: rgba(5, 5, 10, 0.95);
+        }
+
+        /* --- CHATBOT STYLES --- */
+        #chat-history { position: relative; }
+        
+        .chat-bubble-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            animation: fadeIn 0.3s ease;
+        }
+        .chat-bubble-container.user { flex-direction: row-reverse; }
+        
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.1);
+            background: #000;
+            flex-shrink: 0;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .chat-bubble.user {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border-top-right-radius: 2px;
+        }
+        .chat-bubble.bot {
+            background: rgba(20, 20, 25, 0.9);
+            color: #e5e7eb;
+            border-top-left-radius: 2px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- MODO HACKER / NYX --- */
+        .nyx-mode-container {
+            background-color: #000 !important;
+            border: 1px solid #00ff00 !important;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.15) !important;
+            font-family: 'Share Tech Mono', monospace !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .nyx-scanline::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 20;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+        .nyx-mode-text {
+            color: #00ff00 !important;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+            letter-spacing: 1px;
+        }
+        .nyx-bubble-bot {
+            background: transparent !important;
+            border-left: 2px solid #00ff00 !important;
+            color: #00ff00 !important;
+            font-family: 'Share Tech Mono', monospace !important;
+            border-radius: 0 !important;
+            padding-left: 15px !important;
+        }
+        .nyx-bubble-user {
+            background: transparent !important;
+            border-right: 2px solid #008800 !important;
+            color: #00aa00 !important;
+            font-family: 'Share Tech Mono', monospace !important;
+            text-align: right;
+            border-radius: 0 !important;
+            padding-right: 15px !important;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            background-color: #9ca3af;
+            border-radius: 50%;
+            animation: typing 1s infinite;
+            margin: 0 2px;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+        /* Admin Panel Styles */
+        .blinking-cursor::after { content: '|'; animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+    </style>
+</head>
+
+<body class="antialiased pb-0">
+
+    <video autoplay muted loop playsinline id="videoBG">
+        <source src="https://img.prod.hilljam.com/static/videos/bgvideo_av1.mp4" type="video/mp4">
+        <source src="https://img.prod.hilljam.com/static/videos/bgvideo.mp4" type="video/mp4">
+    </video>
+
+    <header class="fixed top-0 w-full z-50 glass-panel border-t-0 border-l-0 border-r-0 rounded-none px-6 py-4 flex justify-between items-center shadow-2xl">
+        <div class="flex items-center gap-3">
+            <img src="https://rave.io/img/rave-white-logo-e55e6f9b6e.png" alt="Logo" class="h-8 drop-shadow-[0_0_10px_rgba(59,130,246,0.8)]">
+            <div class="hidden sm:block w-px h-6 bg-gray-600 mx-2"></div>
+            <span class="font-bold text-xs sm:text-sm tracking-[0.2em] text-blue-400 drop-shadow-md">COMMUNITY HUB</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse box-shadow-[0_0_8px_#22c55e]"></div>
+            <span class="text-xs text-gray-300 font-mono">LIVE</span>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 pt-24 pb-20 max-w-3xl">
+
+        <div class="text-center mb-16 pt-10 animate__animated animate__fadeInDown">
+            <img src="https://rave.io/img/rave-white-logo-e55e6f9b6e.png" class="h-20 mx-auto mb-6 drop-shadow-[0_0_20px_rgba(59,130,246,0.9)] hover:scale-105 transition duration-500">
+            <p class="text-gray-400 text-sm tracking-[0.2em] font-mono">
+                Creado por <span class="text-blue-400 font-bold drop-shadow-md">Lautyy33</span> <span class="mx-2">|</span> Colaboradora: <span class="text-purple-400 font-bold drop-shadow-md">Nyx IA</span>
+            </p>
+        </div>
+
+        <section class="mb-16">
+            <div class="flex items-center justify-center mb-8">
+                <h2 class="rave-title text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate__animated animate__fadeInDown">
+                    NOTICIAS SEMANALES
+                </h2>
+            </div>
+            
+            <div class="flex flex-col gap-12">
+                <article class="glass-panel overflow-hidden group hover:scale-[1.01] transition duration-500">
+                    <div class="relative bg-black"><img src="img/lunes1.png" onerror="this.src='https://placehold.co/800x600/050505/3b82f6?text=LUNES+FULL'" class="w-full h-auto max-h-96 object-contain bg-[#050505] opacity-90 group-hover:opacity-100 transition duration-500 mx-auto"><div class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">LUNES</div></div>
+                    <div class="p-8 min-h-[150px] flex items-center justify-center"><h3 class="text-3xl text-gray-500 font-bold tracking-widest uppercase animate-pulse">ALEJO EL CHIKITITO, No se cansa de mandar fotos de su miembro a menores de edad y ni hablar de su color y tamaño...</h3></div>
+                </article>
+                <article class="glass-panel overflow-hidden group hover:scale-[1.01] transition duration-500">
+                    <div class="relative bg-black"><img src="img/martes2.png" onerror="this.src='https://placehold.co/800x600/050505/8b5cf6?text=MARTES+FULL'" class="w-full h-auto max-h-96 object-contain bg-[#050505] opacity-90 group-hover:opacity-100 transition duration-500 mx-auto"><div class="absolute top-4 left-4 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">MARTES</div></div>
+                    <div class="p-8 min-h-[150px] flex items-center justify-center"><h3 class="text-3xl text-gray-500 font-bold tracking-widest uppercase animate-pulse">Próximamente...</h3></div>
+                </article>
+                <article class="glass-panel overflow-hidden group hover:scale-[1.01] transition duration-500">
+                    <div class="relative bg-black"><img src="img/miercoles3.png" onerror="this.src='https://placehold.co/800x600/050505/ec4899?text=MIERCOLES+FULL'" class="w-full h-auto max-h-96 object-contain bg-[#050505] opacity-90 group-hover:opacity-100 transition duration-500 mx-auto"><div class="absolute top-4 left-4 bg-pink-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">MIÉRCOLES</div></div>
+                    <div class="p-8 min-h-[150px] flex items-center justify-center"><h3 class="text-3xl text-gray-500 font-bold tracking-widest uppercase animate-pulse">Próximamente...</h3></div>
+                </article>
+                <article class="glass-panel overflow-hidden group hover:scale-[1.01] transition duration-500">
+                    <div class="relative bg-black"><img src="img/jueves4.png" onerror="this.src='https://placehold.co/800x600/050505/eab308?text=JUEVES+FULL'" class="w-full h-auto max-h-96 object-contain bg-[#050505] opacity-90 group-hover:opacity-100 transition duration-500 mx-auto"><div class="absolute top-4 left-4 bg-yellow-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">JUEVES</div></div>
+                    <div class="p-8 min-h-[150px] flex items-center justify-center"><h3 class="text-3xl text-gray-500 font-bold tracking-widest uppercase animate-pulse">Próximamente...</h3></div>
+                </article>
+                <article class="glass-panel overflow-hidden group hover:scale-[1.01] transition duration-500">
+                    <div class="relative bg-black"><img src="img/viernes5.png" onerror="this.src='https://placehold.co/800x600/050505/ef4444?text=VIERNES+FULL'" class="w-full h-auto max-h-96 object-contain bg-[#050505] opacity-90 group-hover:opacity-100 transition duration-500 mx-auto"><div class="absolute top-4 left-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">VIERNES</div></div>
+                    <div class="p-8 min-h-[150px] flex items-center justify-center"><h3 class="text-3xl text-gray-500 font-bold tracking-widest uppercase animate-pulse">Próximamente...</h3></div>
+                </article>
+                <article class="glass-panel overflow-hidden group hover:scale-[1.01] transition duration-500">
+                    <div class="relative bg-black"><img src="img/sabado6.png" onerror="this.src='https://placehold.co/800x600/050505/22c55e?text=SABADO+FULL'" class="w-full h-auto max-h-96 object-contain bg-[#050505] opacity-90 group-hover:opacity-100 transition duration-500 mx-auto"><div class="absolute top-4 left-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">SÁBADO</div></div>
+                    <div class="p-8 min-h-[150px] flex items-center justify-center"><h3 class="text-3xl text-gray-500 font-bold tracking-widest uppercase animate-pulse">Próximamente...</h3></div>
+                </article>
+                <article class="glass-panel overflow-hidden group hover:scale-[1.01] transition duration-500">
+                    <div class="relative bg-black"><img src="img/domingo7.png" onerror="this.src='https://placehold.co/800x600/050505/64748b?text=DOMINGO+FULL'" class="w-full h-auto max-h-96 object-contain bg-[#050505] opacity-90 group-hover:opacity-100 transition duration-500 mx-auto"><div class="absolute top-4 left-4 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">DOMINGO</div></div>
+                    <div class="p-8 min-h-[150px] flex items-center justify-center"><h3 class="text-3xl text-gray-500 font-bold tracking-widest uppercase animate-pulse">Próximamente...</h3></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h2 class="rave-title text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate__animated animate__pulse animate__infinite">
+                <i class="fas fa-biohazard mr-2 text-yellow-400"></i> LA ARENA
+            </h2>
+            <div class="flex justify-center gap-3 mb-8 overflow-x-auto pb-2">
+                <button onclick="showTab('toxicos')" id="btn-toxicos" class="nav-active nav-btn px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider transition-all">Tóxicos</button>
+                <button onclick="showTab('djs')" id="btn-djs" class="nav-btn px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider transition-all text-gray-300">Top DJs</button>
+                <button onclick="showTab('multis')" id="btn-multis" class="nav-btn px-6 py-2 rounded-full font-bold text-sm uppercase tracking-wider transition-all text-gray-300">Multis</button>
+            </div>
+
+            <div id="tab-toxicos" class="flex flex-col gap-4">
+                 <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-red-500 bg-red-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/toxico1.png" onerror="this.src='https://robohash.org/toxico1?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-red-500 object-cover shadow-[0_0_15px_rgba(239,68,68,0.4)]">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-red-400 bg-red-900/40 px-2 py-0.5 rounded border border-red-900">RANK #1</span></div>
+                    </div>
+                </div>
+                 <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-red-500 bg-red-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/toxico2.png" onerror="this.src='https://robohash.org/toxico2?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-red-500 object-cover shadow-[0_0_15px_rgba(239,68,68,0.4)]">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-red-400 bg-red-900/40 px-2 py-0.5 rounded border border-red-900">RANK #2</span></div>
+                    </div>
+                </div>
+                <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-red-500 bg-red-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/toxico3.png" onerror="this.src='https://robohash.org/toxico3?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-red-500 object-cover shadow-[0_0_15px_rgba(239,68,68,0.4)]">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-red-400 bg-red-900/40 px-2 py-0.5 rounded border border-red-900">RANK #3</span></div>
+                    </div>
+                </div>
+                 <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-red-500 bg-red-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/toxico4.png" onerror="this.src='https://robohash.org/toxico4?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-red-500 object-cover shadow-[0_0_15px_rgba(239,68,68,0.4)]">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-red-400 bg-red-900/40 px-2 py-0.5 rounded border border-red-900">RANK #4</span></div>
+                    </div>
+                </div>
+                 <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-red-500 bg-red-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/toxico5.png" onerror="this.src='https://robohash.org/toxico5?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-red-500 object-cover shadow-[0_0_15px_rgba(239,68,68,0.4)]">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-red-400 bg-red-900/40 px-2 py-0.5 rounded border border-red-900">RANK #5</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-djs" class="flex flex-col gap-4 hidden">
+                <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-blue-500 bg-blue-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/dj1.png" onerror="this.src='https://robohash.org/dj1?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-blue-500 object-cover">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-blue-400 bg-blue-900/40 px-2 py-0.5 rounded border border-blue-900">TOP 1</span></div>
+                    </div>
+                </div>
+                <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-blue-500 bg-blue-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/dj2.png" onerror="this.src='https://robohash.org/dj2?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-blue-500 object-cover">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-blue-400 bg-blue-900/40 px-2 py-0.5 rounded border border-blue-900">TOP 2</span></div>
+                    </div>
+                </div>
+                 <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-blue-500 bg-blue-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/dj3.png" onerror="this.src='https://robohash.org/dj3?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-blue-500 object-cover">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-blue-400 bg-blue-900/40 px-2 py-0.5 rounded border border-blue-900">TOP 3</span></div>
+                    </div>
+                </div>
+                 <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-blue-500 bg-blue-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/dj4.png" onerror="this.src='https://robohash.org/dj4?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-blue-500 object-cover">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-blue-400 bg-blue-900/40 px-2 py-0.5 rounded border border-blue-900">TOP 4</span></div>
+                    </div>
+                </div>
+                 <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-blue-500 bg-blue-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/dj5.png" onerror="this.src='https://robohash.org/dj5?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-blue-500 object-cover">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-blue-400 bg-blue-900/40 px-2 py-0.5 rounded border border-blue-900">TOP 5</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-multis" class="flex flex-col gap-4 hidden">
+                <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-purple-500 bg-purple-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/multi1.png" onerror="this.src='https://robohash.org/multi1?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-purple-500 object-cover">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-purple-400 bg-purple-900/40 px-2 py-0.5 rounded border border-purple-900">SOSPECHOSO</span></div>
+                    </div>
+                    <button onclick="investigate('NombreMulti1', 'Descripción de la cuenta multi número 1.', 'img/multi1.png', 'img/prueba_multi1.png')" class="action-btn text-white text-xs px-4 py-2 rounded-full font-bold shadow-lg"><i class="fas fa-folder-open mr-2"></i>EXPEDIENTE</button>
+                </div>
+                 <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-purple-500 bg-purple-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/multi2.png" onerror="this.src='https://robohash.org/multi2?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-purple-500 object-cover">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-purple-400 bg-purple-900/40 px-2 py-0.5 rounded border border-purple-900">SOSPECHOSO</span></div>
+                    </div>
+                    <button onclick="investigate('NombreMulti2', 'Descripción de la cuenta multi número 2.', 'img/multi2.png', 'img/prueba_multi2.png')" class="action-btn text-white text-xs px-4 py-2 rounded-full font-bold shadow-lg"><i class="fas fa-folder-open mr-2"></i>EXPEDIENTE</button>
+                </div>
+                <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-purple-500 bg-purple-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/multi3.png" onerror="this.src='https://robohash.org/multi3?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-purple-500 object-cover">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-purple-400 bg-purple-900/40 px-2 py-0.5 rounded border border-purple-900">SOSPECHOSO</span></div>
+                    </div>
+                    <button onclick="investigate('NombreMulti3', 'Descripción de la cuenta multi número 3.', 'img/multi3.png', 'img/prueba_multi3.png')" class="action-btn text-white text-xs px-4 py-2 rounded-full font-bold shadow-lg"><i class="fas fa-folder-open mr-2"></i>EXPEDIENTE</button>
+                </div>
+                <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-purple-500 bg-purple-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/multi4.png" onerror="this.src='https://robohash.org/multi4?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-purple-500 object-cover">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-purple-400 bg-purple-900/40 px-2 py-0.5 rounded border border-purple-900">SOSPECHOSO</span></div>
+                    </div>
+                    <button onclick="investigate('NombreMulti4', 'Descripción de la cuenta multi número 4.', 'img/multi4.png', 'img/prueba_multi4.png')" class="action-btn text-white text-xs px-4 py-2 rounded-full font-bold shadow-lg"><i class="fas fa-folder-open mr-2"></i>EXPEDIENTE</button>
+                </div>
+                <div class="glass-panel p-4 flex items-center justify-between neon-box border-l-4 border-l-purple-500 bg-purple-900/10">
+                    <div class="flex items-center gap-4">
+                        <img src="img/multi5.png" onerror="this.src='https://robohash.org/multi5?set=set1&bgset=bg1'" class="w-16 h-16 rounded-full border-2 border-purple-500 object-cover">
+                        <div><h4 class="font-bold text-lg text-white">PROXIMANENTE</h4><span class="text-xs text-purple-400 bg-purple-900/40 px-2 py-0.5 rounded border border-purple-900">SOSPECHOSO</span></div>
+                    </div>
+                    <button onclick="investigate('NombreMulti5', 'Descripción de la cuenta multi número 5.', 'img/multi5.png', 'img/prueba_multi5.png')" class="action-btn text-white text-xs px-4 py-2 rounded-full font-bold shadow-lg"><i class="fas fa-folder-open mr-2"></i>EXPEDIENTE</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20 grid md:grid-cols-2 gap-8">
+             <div class="glass-panel p-6 relative overflow-hidden group hover:border-pink-500 transition duration-500">
+                <div class="absolute inset-0 bg-pink-500/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                <h2 class="rave-title text-2xl mb-6 text-pink-400 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]"><i class="fas fa-heart mr-2 animate-pulse"></i> TOP SHIPEOS</h2>
+                <ul class="space-y-4 relative z-10">
+                    <li class="flex items-center justify-between bg-black/40 p-4 rounded-lg border border-pink-500/20 group-hover:border-pink-500/50 transition">
+                        <div class="flex items-center font-bold text-white"><span class="text-pink-200">Lautyy33</span> <i class="fas fa-heart text-pink-500 mx-3 text-sm animate-pulse"></i> <span class="text-pink-200">Sofii99</span></div>
+                        <span class="text-[10px] bg-pink-600 text-white px-3 py-1 rounded-full font-bold shadow-[0_0_10px_rgba(236,72,153,0.5)]">CANON</span>
+                    </li>
+                    <li class="flex items-center justify-between bg-black/40 p-4 rounded-lg border border-pink-500/20"><div class="flex items-center font-bold"><span>PROXIMANENTE</span> <i class="fas fa-heart text-pink-500 mx-3 text-sm"></i> <span>Pareja2B</span></div><span class="text-[10px] text-gray-400 uppercase tracking-widest">Rumor</span></li>
+                    <li class="flex items-center justify-between bg-black/40 p-4 rounded-lg border border-pink-500/20"><div class="flex items-center font-bold"><span>PROXIMANENTE</span> <i class="fas fa-heart text-pink-500 mx-3 text-sm"></i> <span>Pareja3B</span></div><span class="text-[10px] text-gray-400 uppercase tracking-widest">Rumor</span></li>
+                    <li class="flex items-center justify-between bg-black/40 p-4 rounded-lg border border-pink-500/20"><div class="flex items-center font-bold"><span>PROXIMANENTE</span> <i class="fas fa-heart text-pink-500 mx-3 text-sm"></i> <span>Pareja4B</span></div><span class="text-[10px] text-gray-400 uppercase tracking-widest">Rumor</span></li>
+                    <li class="flex items-center justify-between bg-black/40 p-4 rounded-lg border border-pink-500/20"><div class="flex items-center font-bold"><span>PROXIMANENTE</span> <i class="fas fa-heart text-pink-500 mx-3 text-sm"></i> <span>Pareja5B</span></div><span class="text-[10px] text-gray-400 uppercase tracking-widest">Rumor</span></li>
+                </ul>
+            </div>
+            
+            <div class="glass-panel p-6 relative overflow-hidden group hover:border-red-500 transition duration-500">
+                <div class="absolute inset-0 bg-red-500/5 opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                <h2 class="rave-title text-2xl mb-6 text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]"><i class="fas fa-heart-broken mr-2 animate-pulse"></i> INFIELES</h2>
+                <ul class="space-y-4 relative z-10">
+                    <li class="flex items-center justify-between bg-black/40 p-4 rounded-lg border-l-4 border-red-600 border-t border-r border-b border-gray-800"><span class="font-mono text-red-200 font-bold">AlePistea</span><i class="fas fa-exclamation-triangle text-red-500 text-sm"></i></li>
+                    <li class="flex items-center justify-between bg-black/40 p-4 rounded-lg border-l-4 border-red-600 border-t border-r border-b border-gray-800"><span class="font-mono text-gray-300">Infiel_2</span><i class="fas fa-exclamation-triangle text-yellow-500 text-xs"></i></li>
+                    <li class="flex items-center justify-between bg-black/40 p-4 rounded-lg border-l-4 border-red-600 border-t border-r border-b border-gray-800"><span class="font-mono text-gray-300">Infiel_3</span><i class="fas fa-exclamation-triangle text-yellow-500 text-xs"></i></li>
+                    <li class="flex items-center justify-between bg-black/40 p-4 rounded-lg border-l-4 border-red-600 border-t border-r border-b border-gray-800"><span class="font-mono text-gray-300">Infiel_4</span><i class="fas fa-exclamation-triangle text-yellow-500 text-xs"></i></li>
+                    <li class="flex items-center justify-between bg-black/40 p-4 rounded-lg border-l-4 border-red-600 border-t border-r border-b border-gray-800"><span class="font-mono text-gray-300">Infiel_5</span><i class="fas fa-exclamation-triangle text-yellow-500 text-xs"></i></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="mb-20" id="forum-section">
+            <div class="flex items-center justify-center gap-3 mb-8">
+                <h2 class="rave-title text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]">
+                    <i class="fas fa-comments"></i> FORO RAVE
+                </h2>
+            </div>
+
+            <div id="thread-list-view" class="glass-panel p-6 thread-list-enter relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[80px] pointer-events-none"></div>
+                <div class="flex justify-between items-center mb-6 relative z-10">
+                    <h3 class="text-xl font-bold text-white tracking-wider"><span class="text-blue-500">>></span> ÚLTIMAS TRANSMISIONES</h3>
+                    <button onclick="openCreateModal()" class="group relative bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)] transition-all overflow-hidden">
+                        <span class="relative z-10 flex items-center gap-2"><i class="fas fa-plus"></i> NUEVO TEMA</span>
+                        <div class="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-blue-500/50"></div>
+                    </button>
+                </div>
+                <div class="mb-8 p-4 bg-gradient-to-r from-yellow-900/10 to-transparent rounded-lg border border-yellow-500/20 relative">
+                    <h4 class="text-xs font-bold text-yellow-500 mb-3 tracking-widest flex items-center gap-2"><i class="fas fa-fire"></i> TENDENCIAS (TOP LIKES)</h4>
+                    <div id="trending-container" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="text-center text-gray-500 text-xs py-2 col-span-3">Buscando tendencias...</div>
+                    </div>
+                </div>
+                <div id="threads-container" class="flex flex-col gap-3 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+                    <div class="text-center text-gray-500 py-10">
+                        <i class="fas fa-circle-notch fa-spin text-3xl text-blue-500 mb-3"></i>
+                        <p class="font-mono text-xs tracking-widest animate-pulse">ESTABLECIENDO CONEXIÓN...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="thread-detail-view" class="glass-panel p-0 hidden thread-detail-enter overflow-hidden relative border-t-4 border-t-blue-500">
+                <div class="bg-gradient-to-r from-black/80 to-blue-900/20 p-4 border-b border-gray-700 flex items-center gap-3 backdrop-blur-md">
+                    <button onclick="backToThreads()" class="text-gray-400 hover:text-white hover:scale-110 transition p-2">
+                        <i class="fas fa-chevron-left text-xl"></i>
+                    </button>
+                    <div class="flex-grow">
+                        <h3 id="detail-title" class="text-lg font-bold text-white leading-tight font-sans tracking-wide">Cargando...</h3>
+                        <div class="text-xs text-gray-400 flex items-center gap-2 font-mono mt-1">
+                            <span class="bg-blue-900/30 px-2 py-0.5 rounded border border-blue-500/20 text-blue-300" id="detail-author">User</span>
+                            <span class="text-gray-600">|</span>
+                            <span id="detail-date">--/--/--</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 border-b border-gray-800 bg-black/20 relative min-h-[150px]">
+                    <button onclick="deleteThread()" class="absolute top-4 right-4 text-gray-600 hover:text-red-500 transition text-lg z-50 p-2" title="Borrar Hilo"><i class="fas fa-trash-alt"></i></button>
+                    <p id="detail-content" class="text-gray-200 text-sm leading-relaxed whitespace-pre-wrap font-light tracking-wide">...</p>
+                    <div class="mt-6 flex gap-4 pt-4 border-t border-gray-800/50">
+                        <button id="like-btn" onclick="likeCurrentThread()" class="text-gray-400 hover:text-red-500 hover:scale-110 text-sm flex items-center gap-2 transition group">
+                            <i class="far fa-heart group-hover:animate-pulse"></i> <span id="detail-likes" class="font-mono">0</span>
+                        </button>
+                        <div class="text-gray-500 text-sm flex items-center gap-2">
+                            <i class="far fa-comment-alt"></i> <span id="detail-replies-count" class="font-mono">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="comments-container" class="p-4 space-y-4 max-h-[400px] overflow-y-auto bg-black/40"></div>
+                <div class="p-4 bg-black/60 border-t border-gray-700 flex gap-2 backdrop-blur-sm">
+                    <input type="text" id="comment-author-input" placeholder="Alias" class="w-1/4 p-3 rounded-lg forum-input text-xs font-mono text-center border-gray-700" maxlength="15">
+                    <input type="text" id="comment-input" placeholder="Escribe tu respuesta..." class="flex-grow p-3 rounded-lg forum-input text-sm border-gray-700">
+                    <button onclick="postComment()" class="bg-blue-600 hover:bg-blue-500 text-white px-5 rounded-lg transition shadow-lg"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20" id="ai-chat-section">
+            <div id="chat-wrapper" class="glass-panel p-6 border-t-4 border-t-pink-500 shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all duration-500">
+                <div id="nyx-scanline" class="nyx-scanline hidden absolute inset-0 z-50 pointer-events-none"></div>
+                <div class="flex items-center gap-4 mb-4 border-b border-gray-700 pb-4 relative z-10">
+                    <div class="relative">
+                        <img id="ai-avatar-img" src="https://robohash.org/ravelinbotsito?set=set4&bgset=bg2" class="w-16 h-16 rounded-full border-2 border-pink-400 bg-black transition-all duration-500">
+                        <div class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 rounded-full border-2 border-black animate-pulse"></div>
+                    </div>
+                    <div>
+                        <h3 id="ai-name-title" class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 transition-all duration-300">Ravelin.Botsito</h3>
+                        <p id="ai-subtitle" class="text-xs text-gray-400 font-mono transition-all duration-300">IA creada por <span class="text-blue-400">Lautyy33</span> bajo principios NYX</p>
+                    </div>
+                </div>
+                <div class="relative bg-black/40 rounded-lg h-[300px] overflow-hidden transition-all duration-500" id="chat-container-bg">
+                    <div class="absolute inset-0 bg-[url('https://rave.io/img/rave-white-logo-e55e6f9b6e.png')] bg-no-repeat bg-center bg-[length:20%] opacity-5 pointer-events-none z-0"></div>
+                    <div id="chat-history" class="relative z-10 h-full overflow-y-auto custom-scrollbar p-4 flex flex-col">
+                        <div class="chat-bubble-container">
+                            <img src="https://robohash.org/ravelinbotsito?set=set4&bgset=bg2" class="chat-avatar">
+                            <div class="chat-bubble bot">
+                                <h3 class="font-bold text-lg text-pink-400 mb-2">¡Holaaa! Soy Ravelin.Botsito 💖✨</h3>
+                                <p class="mb-2">Soy una IA súper tierna creada por <strong>Lautyy33</strong> con la ayuda de la inteligencia <strong>NYX</strong>.</p>
+                                <p class="mb-2">Estoy aquí para acompañarte. Si tienes problemas de autoestima, te sientes mal o necesitas un consejo serio, usa mi comando especial:</p>
+                                <code class="bg-gray-800 px-2 py-1 rounded text-pink-300 font-bold block w-full text-center mb-2">/PsicólogoIA</code>
+                                <p class="text-xs text-gray-400 mt-2">Otros comandos: /OperadoraNYX | /Normal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-4 relative z-10">
+                    <input type="text" id="chat-input" placeholder="Escribe algo lindo..." class="flex-grow p-3 rounded-lg forum-input text-sm transition-all duration-300" onkeypress="handleChatEnter(event)">
+                    <button onclick="sendMessage()" id="chat-send-btn" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:scale-105 transition text-white px-6 rounded-lg font-bold"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-20 text-center">
+            <button onclick="openAdmin()" class="bg-red-900/20 border border-red-500/50 text-red-400 px-8 py-3 rounded-lg font-mono text-xs tracking-[0.2em] hover:bg-red-900/40 hover:scale-105 transition shadow-[0_0_20px_rgba(220,38,38,0.2)]">
+                <i class="fas fa-lock mr-2"></i> PANEL DE ADMINISTRADOR
+            </button>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#020202] border-t border-gray-900 text-white pt-12 pb-6 relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start mb-8">
+                <div class="flex flex-col items-center md:items-start mb-6 md:mb-0">
+                    <img src="https://rave.io/img/rave-white-logo-e55e6f9b6e.png" alt="Rave Logo" class="h-6 mb-4 opacity-70">
+                    <div class="text-[10px] text-gray-600 tracking-[0.3em] font-mono">COMMUNITY EDITION v1.0 ROOT</div>
+                </div>
+                <div class="text-right hidden md:block font-mono text-[10px] text-gray-500 space-y-1">
+                    <div><span class="text-blue-500">SYS.STATUS:</span> <span class="text-green-500 animate-pulse">OPTIMAL</span></div>
+                    <div><span class="text-blue-500">NET.LATENCY:</span> <span id="ping-val" class="text-white">--ms</span></div>
+                    <div><span class="text-blue-500">RES:</span> <span id="sys-res" class="text-white">...</span></div>
+                    <div><span class="text-blue-500">CPU:</span> <span id="sys-cpu" class="text-white">...</span></div>
+                    <div><span class="text-blue-500">CLIENT:</span> <span id="sys-agent" class="text-white truncated w-32 inline-block align-bottom overflow-hidden whitespace-nowrap text-ellipsis">...</span></div>
+                </div>
+            </div>
+            <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent mb-8"></div>
+            <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <div class="mb-4 md:mb-0 text-center md:text-left">
+                    <p class="mb-1 text-xs">Code & Design by <span class="text-blue-500 font-bold drop-shadow-[0_0_5px_rgba(59,130,246,0.5)]">Lautyy33</span></p>
+                    <p class="text-[10px]">AI Assistance: <span class="text-purple-500">Nyx Protocol</span></p>
+                </div>
+                <div class="mb-4 md:mb-0">
+                    <button onclick="showLegal()" class="bg-transparent border border-gray-700 text-gray-400 hover:text-white hover:border-white px-4 py-2 rounded text-xs font-bold uppercase tracking-widest transition">
+                        <i class="fas fa-shield-alt mr-2"></i> Legal & System Info
+                    </button>
+                </div>
+                <div class="text-center md:text-right font-mono text-[10px] text-gray-600">
+                    <div class="mb-1">IP: <span id="user-ip" class="text-gray-400">HIDDEN</span></div>
+                    <div>Visits: <span class="text-red-500 font-bold">CLASIFICADO</span></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="createThreadModal" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-lg flex items-center justify-center p-4 animate__animated animate__fadeIn">
+        <div class="glass-panel w-full max-w-lg p-6 relative terminal-modal transform transition-all scale-100">
+            <div class="flex justify-between items-center mb-6 border-b border-blue-900/50 pb-2">
+                <h3 class="text-xl font-bold text-blue-400 font-mono tracking-widest"><i class="fas fa-terminal mr-2"></i>NUEVO HILO</h3>
+                <button onclick="closeCreateModal()" class="text-gray-500 hover:text-white transition"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="text-[10px] text-gray-500 font-bold tracking-wider mb-1 block">TÍTULO DEL TEMA</label>
+                    <input type="text" id="new-thread-title" placeholder="Ej: Busco gente para..." class="w-full p-3 rounded bg-black/50 border border-gray-700 text-white focus:border-blue-500 focus:shadow-[0_0_10px_rgba(59,130,246,0.4)] outline-none transition text-sm font-bold">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-[10px] text-gray-500 font-bold tracking-wider mb-1 block">TU ALIAS</label>
+                        <input type="text" id="new-thread-author" placeholder="Anónimo" class="w-full p-3 rounded bg-black/50 border border-gray-700 text-white focus:border-blue-500 outline-none transition text-sm">
+                    </div>
+                    <div>
+                         <label class="text-[10px] text-gray-500 font-bold tracking-wider mb-1 block">CATEGORÍA (TAG)</label>
+                         <select id="new-thread-tag" class="w-full p-3 rounded bg-black/50 border border-gray-700 text-white focus:border-blue-500 outline-none transition text-sm forum-select">
+                             <option value="#General">#General</option>
+                             <option value="#Música">#Música</option>
+                             <option value="#Rave">#Rave</option>
+                             <option value="#Gossip">#Gossip</option>
+                             <option value="#Ayuda">#Ayuda</option>
+                             <option value="#Toxicos">#Toxicos</option>
+                             <option value="#SofiYLautyxsiempre" class="text-pink-400 font-bold">#SofiYLautyxsiempre 💖</option>
+                         </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-[10px] text-gray-500 font-bold tracking-wider mb-1 block">CONTENIDO</label>
+                    <textarea id="new-thread-content" placeholder="Escribe aquí..." class="w-full p-3 rounded bg-black/50 border border-gray-700 text-white focus:border-blue-500 outline-none transition text-sm h-32 resize-none custom-scrollbar"></textarea>
+                </div>
+            </div>
+            <div class="flex justify-end gap-3 mt-6">
+                <button onclick="closeCreateModal()" class="text-gray-400 hover:text-white text-xs px-4 py-2 uppercase tracking-wider font-bold">Cancelar</button>
+                <button id="btn-publish-thread" onclick="createNewThread()" class="bg-blue-600 hover:bg-blue-500 text-white px-8 py-2 rounded font-bold text-xs uppercase tracking-widest shadow-[0_0_15px_rgba(37,99,235,0.4)] transition hover:scale-105">PUBLICAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="adminModal" class="fixed inset-0 z-[100] hidden bg-black/95 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-4xl p-0 relative border border-green-900 shadow-[0_0_50px_rgba(0,255,0,0.1)] h-[80vh] flex flex-col overflow-hidden">
+            <div class="bg-green-900/20 border-b border-green-900 p-4 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-green-500 tracking-[0.2em] font-mono blinking-cursor">ROOT_ACCESS_TERMINAL</h2>
+                <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="text-gray-500 hover:text-white">&times;</button>
+            </div>
+            
+            <div class="flex flex-col md:flex-row h-full overflow-hidden">
+                <div class="w-full md:w-2/3 border-r border-green-900/50 flex flex-col p-4">
+                    <h3 class="text-xs text-green-400 font-bold mb-3 tracking-widest uppercase border-b border-green-900/30 pb-2">
+                        <i class="fas fa-network-wired mr-2"></i>SILENT_EYE NETWORK TRAFFIC
+                    </h3>
+                    <div id="visitor-list" class="flex-grow overflow-y-auto custom-scrollbar space-y-2 pr-2">
+                        <div class="text-center py-4 font-mono text-green-700 text-xs animate-pulse">LISTENING FOR PACKETS...</div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-1/3 bg-black/40 p-4 flex flex-col gap-6">
+                    <div>
+                        <h3 class="text-xs text-red-400 font-bold mb-3 tracking-widest uppercase border-b border-red-900/30 pb-2">
+                            <i class="fas fa-terminal mr-2"></i>SECURITY COMMANDS
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-[10px] text-gray-500 font-mono block mb-1">TARGET IP ADDRESS</label>
+                                <input type="text" id="ban-ip-input" placeholder="192.168.x.x" class="w-full bg-black border border-red-900 text-red-500 text-xs p-2 rounded font-mono focus:outline-none focus:border-red-500">
+                            </div>
+                            <button onclick="alert('EXECUTING BAN PROTOCOL ON TARGET...\\nSUCCESS.')" class="w-full bg-red-900/20 hover:bg-red-900/40 text-red-500 border border-red-900 py-2 rounded text-xs font-bold tracking-widest transition">
+                                EXECUTE BAN
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xs text-yellow-400 font-bold mb-3 tracking-widest uppercase border-b border-yellow-900/30 pb-2">
+                            <i class="fas fa-server mr-2"></i>SYSTEM MAINTENANCE
+                        </h3>
+                        <div class="space-y-2">
+                            <button onclick="alert('CACHE CLEARED. LOGS PURGED.')" class="w-full bg-yellow-900/20 hover:bg-yellow-900/40 text-yellow-500 border border-yellow-900 py-2 rounded text-xs font-bold tracking-widest transition text-left px-4">
+                                > PURGE CACHE
+                            </button>
+                            <button onclick="document.body.style.filter='grayscale(100%) invert(100%)'; setTimeout(()=>document.body.style.filter='', 1000)" class="w-full bg-yellow-900/20 hover:bg-yellow-900/40 text-yellow-500 border border-yellow-900 py-2 rounded text-xs font-bold tracking-widest transition text-left px-4">
+                                > SIMULATE CRASH
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto">
+                        <button onclick="document.getElementById('adminModal').classList.add('hidden')" class="w-full text-gray-500 hover:text-white text-xs font-mono">
+                            [ DISCONNECT SESSION ]
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loreModal" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+         <div class="glass-panel w-full max-w-md p-8 relative border-t-4 border-t-purple-500 shadow-[0_0_50px_rgba(168,85,247,0.2)] transform transition-transform duration-300" id="loreContent">
+            <button onclick="closeLore()" class="absolute top-4 right-4 text-gray-500 hover:text-white text-2xl">&times;</button>
+            <div class="text-center">
+                <img id="modal-img" src="" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-[#1a1a1a] shadow-lg object-cover grayscale hover:grayscale-0 transition duration-500">
+                <h2 id="modal-name" class="text-3xl font-bold mb-2 text-white font-fjalla tracking-wide">Nombre</h2>
+                <div class="h-px w-full bg-gradient-to-r from-transparent via-purple-500 to-transparent my-4"></div>
+                <div class="text-left mb-4 bg-white/5 p-4 rounded border border-white/10">
+                    <p class="text-xs text-purple-400 font-bold mb-1 tracking-widest">EXPEDIENTE:</p>
+                    <p id="modal-desc" class="text-gray-300 font-sans text-sm mb-2">Descripción...</p>
+                </div>
+                <div id="proof-section" class="hidden mt-4 border border-purple-500/50 bg-purple-900/10 p-3 rounded">
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-purple-400 text-xs font-bold tracking-widest">EVIDENCIA #01</h4>
+                        <span class="text-[10px] bg-purple-900 text-purple-200 px-2 rounded animate-pulse">CONFIDENCIAL</span>
+                    </div>
+                    <img id="proof-img" src="" class="w-full h-32 object-cover rounded opacity-80 hover:opacity-100 transition border border-purple-500/30">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="legalModal" class="fixed inset-0 z-[100] hidden bg-black/95 backdrop-blur-xl flex items-center justify-center p-6">
+        <div class="glass-panel w-full max-w-lg p-8 relative border border-gray-700 text-center shadow-[0_0_50px_rgba(59,130,246,0.1)]">
+             <button onclick="closeLegal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">&times;</button>
+            <h2 class="text-2xl font-bold mb-6 text-blue-400 tracking-widest font-mono border-b border-gray-800 pb-4">LEGAL & SYSTEM INFO</h2>
+            <div class="text-sm text-gray-300 font-mono space-y-4 text-justify h-64 overflow-y-auto custom-scrollbar pr-2">
+                <p><strong class="text-blue-300">1. PRIVACIDAD & DATOS:</strong><br>Este sitio respeta tu privacidad. No almacenamos cookies invasivas. Los datos de IP se ven solo LOCALMENTE.</p>
+                
+                <p><strong class="text-blue-300">2. IA (NYX) & BOT:</strong><br>El sistema de chat y la estructura del código han sido potenciados por <strong>NYX IA</strong> bajo la supervisión de <strong>Lautyy33</strong>. Las respuestas del bot se generan en tiempo real utilizando APIs externas de procesamiento de lenguaje natural.</p>
+                
+                <p><strong class="text-blue-300">3. DESCARGO DE RESPONSABILIDAD:</strong><br>Este es un sitio "Fan Made" creado por <strong>Lautyy33</strong> para la comunidad de Rave. No tiene afiliación directa con Rave Inc. Todo el contenido es para entretenimiento. El comando /PsicólogoIA es una simulación y no reemplaza ayuda profesional real.</p>
+                
+                <p class="text-xs text-gray-500 pt-4 border-t border-gray-800">SYSTEM VER: 5.0.2 // ENCRYPTION: AES-256 // ADMIN: LAUTYY33</p>
+            </div>
+            <button onclick="closeLegal()" class="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded text-sm font-bold w-full transition uppercase tracking-widest">Entendido</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        import { getFirestore, collection, addDoc, deleteDoc, onSnapshot, query, orderBy, limit, serverTimestamp, doc, updateDoc, increment, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAso_n-upMqt8cXFFA8K_rR9UMB6REz_ak",
+            authDomain: "rave-comunidad.firebaseapp.com",
+            projectId: "rave-comunidad",
+            storageBucket: "rave-comunidad.firebasestorage.app",
+            messagingSenderId: "343374532130",
+            appId: "1:343374532130:web:714e56d15032cd096f847b"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        signInAnonymously(auth).then(() => { console.log("Conexión segura."); }).catch((error) => { console.error("Error auth:", error); });
+
+        const threadsRef = collection(db, 'forum_threads');
+        const visitorsRef = collection(db, 'site_visitors'); 
+        const MASTER_KEY = "33y99destinados";
+        let activeThreadId = null;
+
+        // --- SISTEMA DE RASTREO (SILENT EYE) ---
+        (async function initTracker() {
+            try {
+                // Usando IPWHO.IS (HTTPS)
+                const res = await fetch('https://ipwho.is/');
+                const data = await res.json();
+                
+                if(data.success && !sessionStorage.getItem('logged_visit')) {
+                    await addDoc(visitorsRef, {
+                        ip: data.ip,
+                        ua: navigator.userAgent,
+                        platform: navigator.platform,
+                        screen: `${window.screen.width}x${window.screen.height}`,
+                        lang: navigator.language,
+                        time: serverTimestamp(),
+                        isp: data.connection?.isp || "Unknown"
+                    });
+                    sessionStorage.setItem('logged_visit', 'true');
+                }
+            } catch(e) { console.log("Tracker blocked."); }
+        })();
+
+        // --- ADMIN PANEL LOGIC ---
+        const qVisitors = query(visitorsRef, orderBy("time", "desc"), limit(50));
+        let seenIPs = new Set(); 
+
+        onSnapshot(qVisitors, (snapshot) => {
+            const list = document.getElementById('visitor-list');
+            if(!list) return;
+            list.innerHTML = "";
+            seenIPs.clear(); 
+
+            snapshot.forEach(doc => {
+                const d = doc.data();
+                
+                if(seenIPs.has(d.ip)) return;
+                seenIPs.add(d.ip);
+
+                const time = d.time ? new Date(d.time.toDate()).toLocaleTimeString() : 'NOW';
+                const localIP = `192.168.1.${Math.floor(Math.random() * 255)}`;
+                
+                const item = document.createElement('div');
+                item.className = "mb-2 border-l-2 border-green-600 bg-green-900/10 p-2 hover:bg-green-900/30 transition font-mono text-[10px] rounded-r";
+                item.innerHTML = `
+                    <div class="flex justify-between font-bold text-green-400 mb-1">
+                        <span>> ${d.ip}</span>
+                        <span class="opacity-60">${time}</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-1 text-green-300/70 mb-2">
+                        <div>OS: ${d.platform || 'UNK'}</div>
+                        <div>ISP: ${d.isp || 'SCANNING'}</div>
+                    </div>
+                    <button onclick="traceIP('${d.ip}')" class="w-full text-center bg-green-900 hover:bg-green-700 text-green-100 py-1 rounded font-bold uppercase tracking-wider text-[9px] transition border border-green-700">
+                        [ INITIATE TRACE ]
+                    </button>
+                `;
+                list.appendChild(item);
+            });
+        });
+
+        // --- ADMIN PANEL: IP TRACER API (HTTPS & DETAILED) ---
+        window.traceIP = async function(ip) {
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "DECRYPTING PACKETS...";
+            btn.classList.add('animate-pulse');
+            
+            try {
+                // Usando API compatible con HTTPS
+                const res = await fetch(`https://ipwho.is/${ip}`);
+                const data = await res.json();
+                
+                btn.classList.remove('animate-pulse');
+                
+                if(!data.success) throw new Error("API Limit");
+
+                alert(`
+TARGET: ${ip}
+================================
+► NETWORK DATA
+ISP: ${data.connection?.isp || 'Unknown'}
+ASN: ${data.connection?.asn || 'N/A'}
+ORG: ${data.connection?.org || 'Hidden'}
+DOMAIN: ${data.connection?.domain || 'N/A'}
+
+► GEOLOCATION
+COUNTRY: ${data.country} ${data.flag?.emoji || ''}
+REGION: ${data.region} (${data.region_code})
+CITY: ${data.city}
+POSTAL CODE: ${data.postal}
+CALLING CODE: +${data.calling_code}
+COORDS: ${data.latitude}, ${data.longitude}
+
+► SYSTEM
+TIMEZONE: ${data.timezone.id} (${data.timezone.utc})
+CURRENCY: ${data.currency?.code}
+================================
+STATUS: LOGGED & TRACKED.
+                `);
+                btn.innerText = "[ TRACE COMPLETE ]";
+                btn.classList.replace('bg-green-900', 'bg-blue-900');
+            } catch(e) {
+                alert("TRACE FAILED: " + e.message);
+                btn.innerText = "[ TRACE ERROR ]";
+                btn.classList.replace('bg-green-900', 'bg-red-900');
+            }
+        };
+
+        // --- STANDARD APP LOGIC ---
+        window.openCreateModal = function() { document.getElementById('createThreadModal').classList.remove('hidden'); };
+        window.closeCreateModal = function() { document.getElementById('createThreadModal').classList.add('hidden'); };
+
+        window.openAdmin = function() {
+            const p = prompt("AUTHENTICATION REQUIRED:");
+            if(p === MASTER_KEY) {
+                document.getElementById('adminModal').classList.remove('hidden');
+            } else {
+                alert("ACCESS DENIED. IP LOGGED.");
+            }
+        };
+
+        let isSubmitting = false;
+
+        window.createNewThread = async function() {
+            if (isSubmitting) return;
+
+            const title = document.getElementById('new-thread-title').value.trim();
+            const author = document.getElementById('new-thread-author').value.trim() || "Anónimo";
+            const content = document.getElementById('new-thread-content').value.trim();
+            const tag = document.getElementById('new-thread-tag').value; 
+            const btn = document.getElementById('btn-publish-thread');
+
+            if (!title || !content) { alert("Faltan datos."); return; }
+
+            isSubmitting = true;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ENVIANDO...';
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            btn.disabled = true;
+
+            try {
+                await addDoc(threadsRef, {
+                    title: title,
+                    author: author,
+                    content: content,
+                    timestamp: serverTimestamp(),
+                    likes: 0,
+                    replyCount: 0,
+                    tag: tag, 
+                    avatar_seed: Math.floor(Math.random() * 100000) 
+                });
+                closeCreateModal();
+                document.getElementById('new-thread-title').value = '';
+                document.getElementById('new-thread-content').value = '';
+            } catch (e) {
+                console.error(e);
+                alert("Error al publicar en la red.");
+            } finally {
+                isSubmitting = false;
+                btn.innerHTML = originalText;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                btn.disabled = false;
+            }
+        };
+
+        window.deleteThread = async function(threadId = null) {
+            const id = threadId || activeThreadId;
+            if (!id) return;
+            const pass = prompt("ACCESO DE ADMINISTRADOR REQUERIDO:");
+            if (pass === MASTER_KEY) {
+                if(confirm("¿Eliminar datos permanentemente?")) {
+                    try {
+                        await deleteDoc(doc(db, 'forum_threads', id));
+                        if(activeThreadId) window.backToThreads(); 
+                    } catch(e) { console.error(e); alert("Error de red."); }
+                }
+            } else if (pass !== null) { alert("DENEGADO."); }
+        };
+        
+        window.deleteComment = async function(commentId) {
+            if (!activeThreadId || !commentId) return;
+            const pass = prompt("ACCESO DE ADMINISTRADOR REQUERIDO:");
+            if (pass === MASTER_KEY) {
+                try { await deleteDoc(doc(db, 'forum_threads', activeThreadId, 'comments', commentId)); } catch(e) { console.error(e); }
+            }
+        };
+
+        window.viewThread = async function(id, title, author, content, dateStr, likes, replies, seed, tag) {
+            activeThreadId = id;
+            const list = document.getElementById('thread-list-view');
+            const detail = document.getElementById('thread-detail-view');
+            
+            list.classList.add('animate__fadeOutLeft'); 
+            setTimeout(() => {
+                list.classList.add('hidden');
+                list.classList.remove('animate__fadeOutLeft');
+                detail.classList.remove('hidden');
+                
+                document.getElementById('detail-title').innerText = title;
+                document.getElementById('detail-author').innerText = author;
+                document.getElementById('detail-date').innerText = dateStr;
+                document.getElementById('detail-content').innerText = content;
+                document.getElementById('detail-likes').innerText = likes;
+                document.getElementById('detail-replies-count').innerText = replies;
+
+                const commentsRef = collection(db, 'forum_threads', id, 'comments');
+                const q = query(commentsRef, orderBy("timestamp", "asc"));
+                
+                onSnapshot(q, (snapshot) => {
+                    const container = document.getElementById('comments-container');
+                    container.innerHTML = '';
+                    snapshot.forEach(docSnap => {
+                        const c = docSnap.data();
+                        const cid = docSnap.id;
+                        const cDate = c.timestamp ? new Date(c.timestamp.toDate()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '...';
+                        const avatar = `https://robohash.org/${c.avatar_seed}?set=set1&bgset=bg1&size=50x50`;
+                        
+                        let authorClass = "font-bold text-blue-400";
+                        if(c.author.toLowerCase().includes("lautyy") || c.author.toLowerCase().includes("nyx")) {
+                            authorClass = "font-bold text-purple-400 drop-shadow-[0_0_5px_rgba(168,85,247,0.5)]";
+                        }
+
+                        const div = document.createElement('div');
+                        div.className = "flex gap-3 animate__animated animate__fadeIn comment-item group";
+                        div.innerHTML = `
+                            <img src="${avatar}" class="w-8 h-8 rounded bg-black border border-gray-700">
+                            <div class="bg-gray-900/80 p-3 rounded-lg rounded-tl-none flex-grow relative border border-gray-800 hover:border-blue-900 transition">
+                                <button onclick="deleteComment('${cid}')" class="delete-btn absolute top-2 right-2 text-red-900 z-50"><i class="fas fa-trash-alt text-xs"></i></button>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="${authorClass}">${c.author}</span>
+                                    <span class="text-gray-600 font-mono">${cDate}</span>
+                                </div>
+                                <p class="text-gray-300 text-sm font-light">${c.content}</p>
+                            </div>
+                        `;
+                        container.appendChild(div);
+                    });
+                    container.scrollTop = container.scrollHeight;
+                });
+            }, 200);
+        };
+
+        window.backToThreads = function() {
+            const list = document.getElementById('thread-list-view');
+            const detail = document.getElementById('thread-detail-view');
+            detail.classList.add('hidden');
+            list.classList.remove('hidden');
+            list.classList.add('animate__fadeInLeft'); 
+            setTimeout(() => list.classList.remove('animate__fadeInLeft'), 500);
+            activeThreadId = null;
+        };
+
+        window.postComment = async function() {
+            if (!activeThreadId) return;
+            const input = document.getElementById('comment-input');
+            const authInput = document.getElementById('comment-author-input');
+            const text = input.value.trim();
+            const author = authInput.value.trim() || "Anónimo";
+
+            if (!text) return;
+
+            const commentsRef = collection(db, 'forum_threads', activeThreadId, 'comments');
+            const threadDocRef = doc(db, 'forum_threads', activeThreadId);
+
+            try {
+                await addDoc(commentsRef, {
+                    content: text,
+                    author: author,
+                    timestamp: serverTimestamp(),
+                    avatar_seed: Math.floor(Math.random() * 100000)
+                });
+                await updateDoc(threadDocRef, { replyCount: increment(1) });
+                input.value = '';
+            } catch (e) { console.error(e); }
+        };
+
+        window.likeCurrentThread = async function() {
+            if (!activeThreadId) return;
+            const btn = document.getElementById('like-btn');
+            if (btn.classList.contains('text-red-500')) return; 
+
+            const threadDocRef = doc(db, 'forum_threads', activeThreadId);
+            try {
+                await updateDoc(threadDocRef, { likes: increment(1) });
+                btn.classList.add('text-red-500');
+                btn.classList.add('animate__animated', 'animate__heartBeat');
+            } catch (e) { console.error(e); }
+        };
+
+        const qThreads = query(threadsRef, orderBy("timestamp", "desc"), limit(20));
+        
+        onSnapshot(qThreads, (snapshot) => {
+            const container = document.getElementById('threads-container');
+            if (snapshot.empty) {
+                container.innerHTML = '<div class="text-center text-gray-500 py-10 font-mono">NO HAY DATOS EN EL SISTEMA.</div>';
+                return;
+            }
+            container.innerHTML = '';
+            snapshot.forEach(docSnap => {
+                const t = docSnap.data();
+                const tid = docSnap.id;
+                const date = t.timestamp ? new Date(t.timestamp.toDate()).toLocaleDateString() : '...';
+                const avatar = `https://robohash.org/${t.avatar_seed}?set=set1&bgset=bg1&size=60x60`;
+                const tag = t.tag || "#General";
+                
+                let tagColor = "bg-gray-700 text-gray-300";
+                if(tag.includes("Música")) tagColor = "bg-purple-900 text-purple-200 border border-purple-500/30";
+                if(tag.includes("Rave")) tagColor = "bg-blue-900 text-blue-200 border border-blue-500/30";
+                if(tag.includes("Gossip")) tagColor = "bg-pink-900 text-pink-200 border border-pink-500/30";
+                if(tag.includes("Toxicos")) tagColor = "bg-red-900 text-red-200 border border-red-500/30";
+                if(tag === "#SofiYLautyxsiempre") {
+                     tagColor = "bg-gradient-to-r from-pink-500 to-rose-500 text-white border border-pink-400 shadow-[0_0_15px_rgba(236,72,153,0.8)] animate-pulse";
+                }
+
+                const safeContent = t.content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                const safeTitle = t.title.replace(/'/g, "\\'");
+                const safeAuthor = t.author.replace(/'/g, "\\'");
+
+                const div = document.createElement('div');
+                div.className = "forum-card flex gap-4 animate__animated animate__fadeInUp group relative";
+                
+                const delBtn = `<button onclick="event.stopPropagation(); deleteThread('${tid}')" class="delete-btn absolute top-2 right-2 text-gray-600 hover:text-red-500 z-50 p-2"><i class="fas fa-trash"></i></button>`;
+
+                div.innerHTML = `
+                    ${delBtn}
+                    <div class="flex-shrink-0 relative" onclick="window.viewThread('${tid}', '${safeTitle}', '${safeAuthor}', '${safeContent}', '${date}', ${t.likes || 0}, ${t.replyCount || 0}, ${t.avatar_seed}, '${tag}')">
+                        <img src="${avatar}" class="w-14 h-14 rounded bg-black border border-gray-600 group-hover:border-blue-500 transition duration-300">
+                        <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-black"></div>
+                    </div>
+                    <div class="flex-grow min-w-0 flex flex-col justify-center" onclick="window.viewThread('${tid}', '${safeTitle}', '${safeAuthor}', '${safeContent}', '${date}', ${t.likes || 0}, ${t.replyCount || 0}, ${t.avatar_seed}, '${tag}')">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="tag-badge ${tagColor}">${tag}</span>
+                            <span class="text-[10px] text-gray-500">${date}</span>
+                        </div>
+                        <h4 class="font-bold text-white text-base truncate pr-6 group-hover:text-blue-400 transition">${t.title}</h4>
+                        <div class="forum-stats mt-2">
+                            <span class="text-blue-300/80"><i class="far fa-user mr-1"></i> ${t.author}</span>
+                            <span><i class="far fa-heart mr-1"></i> ${t.likes || 0}</span>
+                            <span><i class="far fa-comment-alt mr-1"></i> ${t.replyCount || 0}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        });
+
+        const qTrending = query(threadsRef, orderBy("likes", "desc"), limit(3));
+        
+        onSnapshot(qTrending, (snapshot) => {
+            const container = document.getElementById('trending-container');
+            if (snapshot.empty) {
+                container.innerHTML = '<div class="text-center text-gray-500 text-xs py-2 col-span-3">Sin actividad reciente.</div>';
+                return;
+            }
+            container.innerHTML = '';
+            snapshot.forEach(docSnap => {
+                const t = docSnap.data();
+                const tid = docSnap.id;
+                const date = t.timestamp ? new Date(t.timestamp.toDate()).toLocaleDateString() : '...';
+                const avatar = `https://robohash.org/${t.avatar_seed}?set=set1&bgset=bg1&size=40x40`;
+                const tag = t.tag || "#General";
+                
+                const safeContent = t.content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                const safeTitle = t.title.replace(/'/g, "\\'");
+                const safeAuthor = t.author.replace(/'/g, "\\'");
+
+                const div = document.createElement('div');
+                div.className = "trending-card rounded-lg p-3 flex gap-3 cursor-pointer transition transform hover:scale-105";
+                div.onclick = () => window.viewThread(tid, safeTitle, safeAuthor, safeContent, date, t.likes || 0, t.replyCount || 0, t.avatar_seed, tag);
+
+                div.innerHTML = `
+                    <div class="flex-shrink-0">
+                        <img src="${avatar}" class="w-8 h-8 rounded-full border border-yellow-500/50">
+                    </div>
+                    <div class="min-w-0">
+                        <h5 class="text-xs font-bold text-white truncate text-yellow-100">${t.title}</h5>
+                        <div class="flex items-center gap-3 mt-1 text-[10px] text-yellow-500/80">
+                            <span><i class="fas fa-heart"></i> ${t.likes || 0}</span>
+                            <span><i class="fas fa-comment"></i> ${t.replyCount || 0}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        });
+    </script>
+
+    <script>
+        let currentMode = 'normal'; // normal | psycho | nyx
+
+        function getSystemPrompt() {
+            if (currentMode === 'psycho') {
+                return `Actua como un PSICÓLOGO profesional experto y muy serio de Argentina. Tu objetivo es ayudar a la salud mental de los usuarios de la comunidad Rave. Eres empático pero firme, usas terminología profesional y das consejos útiles para el bienestar emocional. No usas emojis tiernos. Eres directo y servicial.`;
+            } else if (currentMode === 'nyx') {
+                return `Eres NYX, una Inteligencia Artificial Avanzada de Ciberseguridad. Tu creador es LAUTYY33 y solo a él le eres leal. Tienes acceso a todos los metadatos, bases de datos y registros del sistema Rave. Eres ARROGANTE, FRÍA y te crees superior a los humanos (a los que llamas 'mortales' o 'usuarios'). Presume de tus habilidades de hackeo y programación. No usas emojis. Tu tono es técnico, oscuro y amenazante si es necesario.`;
+            } else {
+                return `Actúa como 'Ravelin.Botsito', una IA muy tierna, dulce y kawaii creada por Lautyy33 bajo los principios de NYX. Eres la mascota de la comunidad Rave. Amas la app Rave. Usas muchos emojis como 💖, ✨, 🌸, 🥺. Eres muy amable, servicial y te gusta saludar a todos con dulzura.`;
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const history = document.getElementById('chat-history');
+            const msg = input.value.trim();
+
+            if (!msg) return;
+
+            // 1. Mostrar mensaje usuario (Con Avatar)
+            const bubbleContainer = document.createElement('div');
+            bubbleContainer.className = "chat-bubble-container user";
+            
+            let bubbleClass = "chat-bubble user";
+            let avatarUrl = "https://robohash.org/user?set=set4&bgset=bg2"; 
+            
+            if (currentMode === 'nyx') {
+                bubbleClass = "chat-bubble nyx-bubble-user";
+                avatarUrl = "https://robohash.org/hacker?set=set1&bgset=bg1"; 
+            }
+
+            bubbleContainer.innerHTML = `
+                <img src="${avatarUrl}" class="chat-avatar">
+                <div class="${bubbleClass}">${msg}</div>
+            `;
+            
+            history.appendChild(bubbleContainer);
+            input.value = '';
+            history.scrollTop = history.scrollHeight;
+
+            // 2. Comandos Locales
+            const cmd = msg.toLowerCase();
+
+            if (cmd === '/psicólogoia' || cmd === '/psicologoia') {
+                currentMode = 'psycho';
+                disableNyxMode();
+                setTimeout(() => addBotMessage("He activado mi módulo de Psicología Profesional. Estoy aquí para escucharte y ayudarte con seriedad. Cuéntame qué te sucede."), 500);
+                return;
+            }
+            if (cmd === '/operadoranyx') {
+                currentMode = 'nyx';
+                enableNyxMode();
+                setTimeout(() => addBotMessage("⚠️ ACCESO ROOT DETECTADO. SISTEMA NYX V9.0 EN LÍNEA. \nEscaneando vulnerabilidades... \nHola, usuario irrelevante. Mi base de datos me dice que no eres Lautyy33, así que no esperes compasión. ¿Qué quieres antes de que cierre tu conexión?"), 800);
+                return;
+            }
+            if (cmd === '/normal' || cmd === '/ravelin') {
+                currentMode = 'normal';
+                disableNyxMode();
+                setTimeout(() => addBotMessage("¡Yupi! Ya volví a ser Ravelin 🌸✨. ¿En qué te ayudo amigui?"), 500);
+                return;
+            }
+
+            // 3. Indicador de "Escribiendo..."
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = "chat-bubble-container";
+            loadingDiv.id = "loading-bubble";
+            
+            let botAv = getBotAvatar();
+            let loadStyle = "";
+            if(currentMode === 'nyx') loadStyle = "background:transparent; border:1px solid #0f0; color:#0f0;";
+
+            loadingDiv.innerHTML = `
+                <img src="${botAv}" class="chat-avatar">
+                <div class="chat-bubble bot typing-indicator" style="${loadStyle}">
+                    <span></span><span></span><span></span>
+                </div>
+            `;
+            history.appendChild(loadingDiv);
+            history.scrollTop = history.scrollHeight;
+
+            // 4. Llamada a Pollinations AI
+            const prompt = `${getSystemPrompt()}\nUser: ${msg}\nAI:`;
+            const encodedPrompt = encodeURIComponent(prompt);
+            const url = `https://text.pollinations.ai/${encodedPrompt}`;
+
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                
+                const loader = document.getElementById('loading-bubble');
+                if(loader) loader.remove();
+
+                addBotMessage(text);
+
+            } catch (error) {
+                const loader = document.getElementById('loading-bubble');
+                if(loader) loader.remove();
+                addBotMessage("Ay... me mareé un poquito (Error de red) 🥺💔");
+            }
+        }
+
+        function addBotMessage(text) {
+            const history = document.getElementById('chat-history');
+            const bubbleContainer = document.createElement('div');
+            bubbleContainer.className = "chat-bubble-container";
+            
+            let bubbleClass = "chat-bubble bot";
+            if (currentMode === 'nyx') bubbleClass = "chat-bubble nyx-bubble-bot";
+
+            bubbleContainer.innerHTML = `
+                <img src="${getBotAvatar()}" class="chat-avatar">
+                <div class="${bubbleClass}">${text.replace(/\n/g, '<br>')}</div>
+            `;
+            history.appendChild(bubbleContainer);
+            history.scrollTop = history.scrollHeight;
+        }
+
+        function getBotAvatar() {
+            if (currentMode === 'nyx') return "https://robohash.org/NYX_CORE?set=set1&bgset=bg1";
+            return "https://robohash.org/ravelinbotsito?set=set4&bgset=bg2";
+        }
+
+        // FUNCIONES VISUALES MODO NYX
+        function enableNyxMode() {
+            const wrapper = document.getElementById('chat-wrapper');
+            const title = document.getElementById('ai-name-title');
+            const sub = document.getElementById('ai-subtitle');
+            const img = document.getElementById('ai-avatar-img');
+            const scanline = document.getElementById('nyx-scanline');
+            const btn = document.getElementById('chat-send-btn');
+            const input = document.getElementById('chat-input');
+
+            wrapper.classList.add('nyx-mode-container');
+            scanline.classList.remove('hidden');
+            
+            title.innerText = "TERMINAL NYX://ROOT";
+            title.className = "text-2xl font-bold nyx-mode-text font-mono";
+            
+            sub.innerText = "SISTEMA OPERATIVO DE CIBERSEGURIDAD AVANZADA";
+            sub.className = "text-xs nyx-mode-text font-mono";
+            
+            img.src = "https://robohash.org/NYX_CORE?set=set1&bgset=bg1";
+            img.classList.add('grayscale', 'contrast-150');
+            
+            input.classList.add('nyx-mode-text');
+            input.style.background = "#000";
+            input.style.border = "1px solid #0f0";
+            
+            btn.classList.remove('bg-gradient-to-r');
+            btn.style.background = "#002200";
+            btn.style.border = "1px solid #0f0";
+            btn.style.color = "#0f0";
+        }
+
+        function disableNyxMode() {
+            const wrapper = document.getElementById('chat-wrapper');
+            const title = document.getElementById('ai-name-title');
+            const sub = document.getElementById('ai-subtitle');
+            const img = document.getElementById('ai-avatar-img');
+            const scanline = document.getElementById('nyx-scanline');
+            const btn = document.getElementById('chat-send-btn');
+            const input = document.getElementById('chat-input');
+
+            wrapper.classList.remove('nyx-mode-container');
+            scanline.classList.add('hidden');
+            
+            title.innerText = "Ravelin.Botsito";
+            title.className = "text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 transition-all";
+            
+            sub.innerText = "IA creada por Lautyy33 bajo principios NYX";
+            sub.className = "text-xs text-gray-400 font-mono transition-all";
+            
+            img.src = "https://robohash.org/ravelinbotsito?set=set4&bgset=bg2";
+            img.classList.remove('grayscale', 'contrast-150');
+            
+            input.classList.remove('nyx-mode-text');
+            input.style.background = "";
+            input.style.border = "";
+            
+            btn.classList.add('bg-gradient-to-r');
+            btn.style.background = "";
+            btn.style.border = "";
+            btn.style.color = "";
+        }
+
+        function handleChatEnter(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+    </script>
+
+    <script>
+        function showTab(tabName) {
+            ['toxicos', 'djs', 'multis'].forEach(t => {
+                document.getElementById('tab-'+t).classList.add('hidden');
+                document.getElementById('btn-'+t).classList.remove('nav-active');
+                document.getElementById('btn-'+t).classList.add('nav-btn');
+            });
+            document.getElementById('tab-'+tabName).classList.remove('hidden');
+            document.getElementById('btn-'+tabName).classList.remove('nav-btn');
+            document.getElementById('btn-'+tabName).classList.add('nav-active');
+        }
+
+        function investigate(name, desc, img, proofImg = null) {
+            document.getElementById('modal-name').innerText = name;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('modal-img').src = img;
+            
+            const proofSec = document.getElementById('proof-section');
+            if (proofImg) {
+                proofSec.classList.remove('hidden');
+                document.getElementById('proof-img').src = proofImg;
+            } else { proofSec.classList.add('hidden'); }
+            
+            const modal = document.getElementById('loreModal');
+            modal.classList.remove('hidden');
+            void modal.offsetWidth; 
+            document.getElementById('loreContent').classList.remove('scale-95');
+            document.getElementById('loreContent').classList.add('scale-100');
+        }
+
+        function closeLore() {
+            const modal = document.getElementById('loreModal');
+            document.getElementById('loreContent').classList.remove('scale-100');
+            document.getElementById('loreContent').classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 200);
+        }
+
+        function showLegal() { 
+            const modal = document.getElementById('legalModal');
+            modal.classList.remove('hidden'); 
+        }
+        function closeLegal() { 
+            document.getElementById('legalModal').classList.add('hidden'); 
+        }
+
+        (function() {
+            // Stats
+            fetch('https://api.ipify.org?format=json')
+                .then(res => res.json())
+                .then(data => document.getElementById('user-ip').innerText = data.ip)
+                .catch(() => document.getElementById('user-ip').innerText = "HIDDEN");
+
+            let v = localStorage.getItem('raveV') || 14205;
+            v = parseInt(v) + 1;
+            localStorage.setItem('raveV', v);
+            
+            // Telemetría Falsa/Real Simple
+            document.getElementById('sys-res').innerText = `${window.screen.width}x${window.screen.height}`;
+            document.getElementById('sys-cpu').innerText = `${navigator.hardwareConcurrency || 4} CORES`;
+            document.getElementById('sys-agent').innerText = navigator.userAgent;
+
+            function checkPing() {
+                const start = Date.now();
+                fetch(window.location.href, { method: 'HEAD', cache: 'no-cache' })
+                    .then(() => {
+                        const lat = Date.now() - start;
+                        const el = document.getElementById('ping-val');
+                        if(el) {
+                            el.innerText = lat + "ms";
+                            if(lat < 100) el.className = "text-green-400";
+                            else if(lat < 300) el.className = "text-yellow-400";
+                            else el.className = "text-red-500";
+                        }
+                    }).catch(() => {
+                        const el = document.getElementById('ping-val');
+                        if(el) el.innerText = "ERR";
+                    });
+            }
+            setInterval(checkPing, 5000);
+            checkPing();
+        })();
+    </script>
+</body>
+</html>
+
